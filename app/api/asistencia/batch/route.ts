@@ -3,6 +3,8 @@ import { getSession } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { notificarRepresentantes } from "@/lib/notificaciones";
 
+export const dynamic = "force-dynamic";
+
 /**
  * POST /api/asistencia/batch
  * Guarda múltiples asistencias en una sola llamada.
