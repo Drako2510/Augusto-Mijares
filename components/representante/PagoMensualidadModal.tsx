@@ -29,7 +29,7 @@ export function PagoMensualidadModal({ estudianteId, estudianteNombre, estudiant
       { nombre: "Transferencia", datos: [
         { clave: "Banco", valor: "Banco Nacional" },
         { clave: "Titular", valor: "U.E. Asistencia Plus" },
-        { clave: "RIF", valor: "J-12345678-9" },
+        { clave: "Documento", valor: "J123456789" },
         { clave: "Cuenta", valor: "01021234567890123456" },
         { clave: "Tipo", valor: "Corriente" },
       ]},
@@ -37,7 +37,7 @@ export function PagoMensualidadModal({ estudianteId, estudianteNombre, estudiant
         { clave: "Banco", valor: "Banco Nacional" },
         { clave: "Teléfono", valor: "04125550000" },
         { clave: "Titular", valor: "U.E. Asistencia Plus" },
-        { clave: "RIF", valor: "J-12345678-9" },
+        { clave: "Documento", valor: "J123456789" },
       ]},
     ];
   };
@@ -184,7 +184,6 @@ export function PagoMensualidadModal({ estudianteId, estudianteNombre, estudiant
                   📋 Copiar Todo
                 </button>
               </div>
-              <p className="text-xs text-gray-400 text-center">Pega los datos en tu app bancaria.</p>
               <button onClick={() => setMetodo("yaPague")}
                 className="w-full rounded-lg bg-green-600 px-4 py-2.5 text-sm font-bold text-white hover:bg-green-700 transition-colors">
                 ✅ Ya Pagué
