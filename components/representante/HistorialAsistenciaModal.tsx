@@ -93,17 +93,14 @@ export function HistorialAsistenciaModal({ estudianteId, estudianteNombre, onClo
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4">
-      <div className="flex max-h-[95vh] w-full max-w-4xl flex-col overflow-hidden rounded-2xl bg-white dark:bg-gray-900 shadow-2xl mx-2">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm py-8 px-2 sm:px-4" onClick={onClose}>
+      <div className="flex max-h-full w-full max-w-3xl flex-col overflow-hidden rounded-2xl bg-white dark:bg-gray-900 shadow-2xl" onClick={(e) => e.stopPropagation()}>
         {/* Header */}
         <div className="flex items-center justify-between border-b border-gray-100 dark:border-gray-800 p-6">
           <div>
             <h2 className="text-xl font-extrabold text-gray-800 dark:text-gray-100">📊 Historial de Asistencia</h2>
             <p className="text-sm text-gray-500 dark:text-gray-400 dark:text-gray-500">{estudianteNombre}</p>
           </div>
-          <button onClick={onClose} className="rounded-full p-2 hover:bg-gray-100 dark:bg-gray-800 transition">
-            <FiX className="h-5 w-5 text-gray-600 dark:text-gray-300" />
-          </button>
         </div>
 
         {/* Contenido */}
@@ -192,9 +189,7 @@ export function HistorialAsistenciaModal({ estudianteId, estudianteNombre, onClo
 
         {/* Footer */}
         <div className="border-t border-gray-100 dark:border-gray-800 p-4 text-right">
-          <button onClick={onClose} className="btn-primary text-sm">
-            Cerrar
-          </button>
+          <button onClick={onClose} className="btn-primary text-sm">Cerrar</button>
         </div>
       </div>
     </div>

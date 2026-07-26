@@ -8,7 +8,7 @@ import { useInstitucion } from "@/components/InstitucionProvider";
 import { useThemeContext } from "@/components/ThemeProvider";
 import { useSession } from "@/hooks/useSession";
 
-const NAV_ITEMS: Record<string, { href: string; icon: string; label: string }[]> = {
+const NAV_ITEMS: Record<string, { href?: string; icon: string; label: string; action?: string }[]> = {
   directivo: [
     { href: "/directivo", icon: "👔", label: "Inicio" },
     { href: "/directivo/registro/profesor", icon: "👨‍🏫", label: "Registrar Profesor" },
@@ -19,6 +19,10 @@ const NAV_ITEMS: Record<string, { href: string; icon: string; label: string }[]>
   ],
   representante: [
     { href: "/representante", icon: "🏠", label: "Inicio" },
+    { icon: "📝", label: "Ver Notas", action: "verNotas" },
+    { icon: "📊", label: "Historial de Asistencias", action: "historialAsistencia" },
+    { icon: "📅", label: "Ver Horario", action: "verHorario" },
+    { icon: "💰", label: "Método de Pago", action: "pagoMensualidad" },
   ],
 };
 
@@ -76,59 +80,39 @@ export function Sidebar({ rol, abierto, onClose, onVerHorario, onPagoMensualidad
 
         {/* Navegación */}
         <nav className="flex-1 px-3 space-y-1 overflow-y-auto sidebar-scroll">
-          {items.map((item) => {
-            const active = isActive(item.href);
+          {items.map((item, i) => {
+            const active = item.href ? isActive(item.href) : false;
+            const classes = `flex items-center gap-3 px-3 py-3 rounded-xl text-sm font-medium transition-all duration-200 ${
+              active
+                ? "bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-white font-semibold"
+                : "text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800/50 hover:text-gray-900 dark:hover:text-white"
+            }`;
+
+            if (item.href) {
+              return (
+                <Link key={i} href={item.href} onClick={onClose} className={classes}>
+                  <span className="text-xl flex-shrink-0">{item.icon}</span>
+                  <span>{item.label}</span>
+                </Link>
+              );
+            }
+
+            const handleClick = () => {
+              onClose();
+              if (item.action === "verNotas") onVerNotas?.();
+              if (item.action === "historialAsistencia") onHistorialAsistencia?.();
+              if (item.action === "verHorario") onVerHorario?.();
+              if (item.action === "pagoMensualidad") onPagoMensualidad?.();
+            };
+
             return (
-              <Link
-                key={item.href}
-                href={item.href}
-                onClick={onClose}
-                className={`flex items-center gap-3 px-3 py-3 rounded-xl text-sm font-medium transition-all duration-200 ${
-                  active
-                    ? "bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-white font-semibold"
-                    : "text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800/50 hover:text-gray-900 dark:hover:text-white"
-                }`}
-              >
+              <button key={i} onClick={handleClick} className={classes}>
                 <span className="text-xl flex-shrink-0">{item.icon}</span>
                 <span>{item.label}</span>
-              </Link>
+              </button>
             );
           })}
         </nav>
-
-        {/* Representante actions */}
-        {rol === "representante" && (
-          <div className="px-3 space-y-1 mb-2">
-            {onVerNotas && (
-              <button onClick={() => { onClose(); onVerNotas(); }}
-                className="flex items-center gap-3 w-full px-3 py-3 rounded-xl text-sm font-medium text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-all duration-200">
-                <span className="text-xl flex-shrink-0">📝</span>
-                <span>Ver Notas</span>
-              </button>
-            )}
-            {onHistorialAsistencia && (
-              <button onClick={() => { onClose(); onHistorialAsistencia(); }}
-                className="flex items-center gap-3 w-full px-3 py-3 rounded-xl text-sm font-medium text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-all duration-200">
-                <span className="text-xl flex-shrink-0">📊</span>
-                <span>Historial de Asistencias</span>
-              </button>
-            )}
-            {onVerHorario && (
-              <button onClick={() => { onClose(); onVerHorario(); }}
-                className="flex items-center gap-3 w-full px-3 py-3 rounded-xl text-sm font-medium text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-all duration-200">
-                <span className="text-xl flex-shrink-0">📅</span>
-                <span>Ver Horario</span>
-              </button>
-            )}
-            {onPagoMensualidad && (
-              <button onClick={() => { onClose(); onPagoMensualidad(); }}
-                className="flex items-center gap-3 w-full px-3 py-3 rounded-xl text-sm font-medium text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-all duration-200">
-                <span className="text-xl flex-shrink-0">💰</span>
-                <span>Método de Pago</span>
-              </button>
-            )}
-          </div>
-        )}
 
         {/* Footer actions */}
         <div className="px-3 space-y-1 mt-auto border-t border-gray-200 dark:border-gray-800 pt-3">
