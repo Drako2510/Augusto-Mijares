@@ -27,10 +27,14 @@ export function DashboardLayoutClient({
         rol={rol}
         abierto={sidebarAbierto}
         onClose={() => setSidebarAbierto(false)}
+        onVerHorario={() => window.dispatchEvent(new CustomEvent("rep:verHorario"))}
+        onPagoMensualidad={() => window.dispatchEvent(new CustomEvent("rep:pagoMensualidad"))}
+        onVerNotas={() => window.dispatchEvent(new CustomEvent("rep:verNotas"))}
+        onHistorialAsistencia={() => window.dispatchEvent(new CustomEvent("rep:historialAsistencia"))}
       />
 
       {/* Main content */}
-      <div className="xl:ml-[244px] transition-all duration-200">
+      <div className="xl:ml-[280px] transition-all duration-200">
         <DashboardNavbar onMenuClick={() => setSidebarAbierto(true)} />
         <div className="relative z-10 animate-revealUp px-3 sm:px-4 lg:px-6 py-4 sm:py-6 max-w-[100vw] overflow-x-hidden">
           {children}

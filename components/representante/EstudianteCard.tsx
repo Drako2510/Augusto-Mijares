@@ -57,6 +57,18 @@ export function EstudianteCard({
   const [mostrarHistorial, setMostrarHistorial] = useState(false);
   const [mostrarNotas, setMostrarNotas] = useState(false);
 
+  // Listen for sidebar events
+  useEffect(() => {
+    const onNotas = () => setMostrarNotas(true);
+    const onHistorial = () => setMostrarHistorial(true);
+    window.addEventListener("rep:verNotas", onNotas);
+    window.addEventListener("rep:historialAsistencia", onHistorial);
+    return () => {
+      window.removeEventListener("rep:verNotas", onNotas);
+      window.removeEventListener("rep:historialAsistencia", onHistorial);
+    };
+  }, []);
+
   const formatearFecha = (fechaStr: string) => {
     try {
       return format(new Date(fechaStr), "d 'de' MMMM", { locale: es });
@@ -67,36 +79,18 @@ export function EstudianteCard({
 
   return (
     <div className="overflow-hidden rounded-2xl bg-white dark:bg-gray-900 shadow-sm dark:shadow-gray-900/30 border border-gray-200 dark:border-gray-700">
-      {/* Header con gradiente */}
-      <div className="bg-gradient-to-r from-blue-600 to-blue-700 p-6 text-white">
-        <div className="flex items-start justify-between">
-          <div>
-            <h2 className="text-2xl font-extrabold">{estudiante.nombre}</h2>
-            <p className="mt-1 text-blue-100">
-              📚 {estudiante.anio} · Sección {estudiante.seccion}
-            </p>
-          </div>
-          <div className="flex items-center gap-2">
-            <button
-              onClick={() => setMostrarNotas(true)}
-              className="flex items-center gap-1.5 rounded-lg bg-white/20 px-3 py-1.5 text-sm font-medium text-white transition hover:bg-white/30"
-            >
-              📝 Ver Notas
-            </button>
-            <button
-              onClick={() => setMostrarHistorial(true)}
-              className="flex items-center gap-1.5 rounded-lg bg-white/20 px-3 py-1.5 text-sm font-medium text-white transition hover:bg-white/30"
-            >
-              📊 Historial de Asistencias
-            </button>
-          </div>
-        </div>
-        {loading && (
-          <div className="mt-2 h-1 w-full overflow-hidden rounded-full bg-blue-400">
-            <div className="h-full animate-pulse rounded-full bg-white dark:bg-gray-900/60" />
-          </div>
-        )}
+      {/* Header */}
+
+      <div className="bg-gradient-to-r from-blue-600 to-blue-700 px-4 sm:px-6 py-3 text-white">
+
+        <p className="text-center text-sm font-semibold text-blue-100 uppercase tracking-[0.2em]">Información Académica</p>
+
       </div>
+      {loading && (
+        <div className="h-1 w-full overflow-hidden bg-blue-400">
+          <div className="h-full animate-pulse rounded-full bg-white dark:bg-gray-900/60" />
+        </div>
+      )}
 
       {/* Cuerpo */}
       <div className="p-6 space-y-6">

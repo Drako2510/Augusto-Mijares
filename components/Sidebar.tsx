@@ -26,9 +26,13 @@ interface Props {
   rol: string;
   abierto: boolean;
   onClose: () => void;
+  onVerHorario?: () => void;
+  onPagoMensualidad?: () => void;
+  onVerNotas?: () => void;
+  onHistorialAsistencia?: () => void;
 }
 
-export function Sidebar({ rol, abierto, onClose }: Props) {
+export function Sidebar({ rol, abierto, onClose, onVerHorario, onPagoMensualidad, onVerNotas, onHistorialAsistencia }: Props) {
   const pathname = usePathname();
   const { user } = useSession();
   const { theme, toggle } = useThemeContext();
@@ -51,7 +55,7 @@ export function Sidebar({ rol, abierto, onClose }: Props) {
 
       {/* Sidebar */}
       <aside
-        className={`fixed left-0 top-0 z-50 h-full w-[280px] bg-white dark:bg-gray-900 border-r border-gray-200 dark:border-gray-800 flex flex-col py-4 transition-transform duration-300 xl:translate-x-0 xl:z-40 xl:w-[72px] xl:w-[244px] ${
+        className={`fixed left-0 top-0 z-50 h-full w-[280px] bg-white dark:bg-gray-900 border-r border-gray-200 dark:border-gray-800 flex flex-col py-4 transition-transform duration-300 xl:translate-x-0 xl:z-40 xl:w-[280px] ${
           abierto ? "translate-x-0" : "-translate-x-full"
         }`}
       >
@@ -91,6 +95,40 @@ export function Sidebar({ rol, abierto, onClose }: Props) {
             );
           })}
         </nav>
+
+        {/* Representante actions */}
+        {rol === "representante" && (
+          <div className="px-3 space-y-1 mb-2">
+            {onVerNotas && (
+              <button onClick={() => { onClose(); onVerNotas(); }}
+                className="flex items-center gap-3 w-full px-3 py-3 rounded-xl text-sm font-medium text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-all duration-200">
+                <span className="text-xl flex-shrink-0">📝</span>
+                <span>Ver Notas</span>
+              </button>
+            )}
+            {onHistorialAsistencia && (
+              <button onClick={() => { onClose(); onHistorialAsistencia(); }}
+                className="flex items-center gap-3 w-full px-3 py-3 rounded-xl text-sm font-medium text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-all duration-200">
+                <span className="text-xl flex-shrink-0">📊</span>
+                <span>Historial de Asistencias</span>
+              </button>
+            )}
+            {onVerHorario && (
+              <button onClick={() => { onClose(); onVerHorario(); }}
+                className="flex items-center gap-3 w-full px-3 py-3 rounded-xl text-sm font-medium text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-all duration-200">
+                <span className="text-xl flex-shrink-0">📅</span>
+                <span>Ver Horario</span>
+              </button>
+            )}
+            {onPagoMensualidad && (
+              <button onClick={() => { onClose(); onPagoMensualidad(); }}
+                className="flex items-center gap-3 w-full px-3 py-3 rounded-xl text-sm font-medium text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-all duration-200">
+                <span className="text-xl flex-shrink-0">💰</span>
+                <span>Método de Pago</span>
+              </button>
+            )}
+          </div>
+        )}
 
         {/* Footer actions */}
         <div className="px-3 space-y-1 mt-auto border-t border-gray-200 dark:border-gray-800 pt-3">
