@@ -1,0 +1,270 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+// ─── Usuario ────────────────────────────────────────────────
+model Usuario {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  password  String
+  nombre    String
+  rol       String   // "profesor" | "representante" | "directivo"
+  activo    Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relaciones según rol
+  profesorMaterias  ProfesorMateria[]
+  representanteDe   RepresentanteHijo[]
+  notificaciones    Notificacion[]
+  logs              LogAuditoria[]
+
+  @@map("usuarios")
+}
+
+// ─── Materia ────────────────────────────────────────────────
+model Materia {
+  id     String @id
+  nombre String
+  icono  String
+
+  profesorMaterias ProfesorMateria[]
+  asistencias      Asistencia[]
+  evaluaciones     Evaluacion[]
+  tareas           Tarea[]
+  notificaciones   Notificacion[]
+  calificaciones   Calificacion[]
+
+  @@map("materias")
+}
+
+// ─── Profesor → Materia (asignación con clave secreta) ─────
+model ProfesorMateria {
+  id          String  @id @default(cuid())
+  usuarioId   String
+  materiaId   String
+  anio        String  // "1ro" | "2do" | "3ro" | "4to" | "5to"
+  seccion     String  // "A" | "B" | "C" | "D"
+  claveSecreta String
+  activo      Boolean @default(true)
+  
+  usuario Usuario @relation(fields: [usuarioId], references: [id], onDelete: Cascade)
+  materia Materia @relation(fields: [materiaId], references: [id], onDelete: Cascade)
+
+  @@unique([usuarioId, materiaId, anio, seccion])
+  @@map("profesor_materias")
+}
+
+// ─── Estudiante ─────────────────────────────────────────────
+model Estudiante {
+  id              String    @id @default(cuid())
+  nombre          String
+  cedula          String?   @unique
+  anio            String    // "1ro" | "2do" | "3ro" | "4to" | "5to"
+  seccion         String    // "A" | "B" | "C" | "D"
+  fechaNacimiento DateTime?
+  activo          Boolean   @default(true)
+  solvente        Boolean   @default(true)
+
+  representantes RepresentanteHijo[]
+  asistencias    Asistencia[]
+  evaluaciones   Evaluacion[]
+  calificaciones Calificacion[]
+  notificaciones Notificacion[]
+
+  @@map("estudiantes")
+}
+
+// ─── Representante → Hijo(s) ────────────────────────────────
+model RepresentanteHijo {
+  id              String @id @default(cuid())
+  representanteId String
+  estudianteId    String
+
+  representante Usuario    @relation(fields: [representanteId], references: [id], onDelete: Cascade)
+  estudiante    Estudiante @relation(fields: [estudianteId], references: [id], onDelete: Cascade)
+
+  @@unique([representanteId, estudianteId])
+  @@map("representante_hijos")
+}
+
+// ─── Asistencia ─────────────────────────────────────────────
+model Asistencia {
+  id           String   @id @default(cuid())
+  estudianteId String
+  materiaId    String
+  fecha        DateTime @default(now())
+  estado       String   // "presente" | "ausente" | "tarde" | "justificado"
+  observacion  String?
+
+  estudiante Estudiante @relation(fields: [estudianteId], references: [id], onDelete: Cascade)
+  materia    Materia    @relation(fields: [materiaId], references: [id], onDelete: Cascade)
+
+  @@unique([estudianteId, materiaId, fecha])
+  @@map("asistencias")
+}
+
+// ─── Evaluación ─────────────────────────────────────────────
+model Evaluacion {
+  id           String   @id @default(cuid())
+  estudianteId String?
+  materiaId    String
+  tipo         String   // "examen" | "tarea" | "proyecto" | "participacion"
+  titulo       String
+  descripcion  String?
+  calificacion Float
+  fecha        DateTime @default(now())
+  anio         String?  // "1ro" | "2do" | "3ro" | "4to" | "5to"
+  seccion      String?  // "A" | "B" | "C" | "D"
+  profesorId   String?
+
+  estudiante    Estudiante?    @relation(fields: [estudianteId], references: [id], onDelete: SetNull)
+  materia       Materia        @relation(fields: [materiaId], references: [id], onDelete: Cascade)
+  calificaciones Calificacion[]
+
+  @@map("evaluaciones")
+}
+
+// ─── Calificación (nota individual) ────────────────────────
+model Calificacion {
+  id            String   @id @default(cuid())
+  estudianteId  String
+  evaluacionId  String
+  materiaId     String
+  profesorId    String?
+  nota          Float
+  observacion   String?
+  publicada     Boolean  @default(false)
+  fechaRegistro DateTime @default(now())
+  fechaActualizacion DateTime @updatedAt
+
+  estudiante Estudiante @relation(fields: [estudianteId], references: [id], onDelete: Cascade)
+  evaluacion Evaluacion @relation(fields: [evaluacionId], references: [id], onDelete: Cascade)
+  materia    Materia    @relation(fields: [materiaId], references: [id], onDelete: Cascade)
+
+  @@unique([estudianteId, evaluacionId])
+  @@map("calificaciones")
+}
+
+// ─── Tarea (asignada por profesor) ──────────────────────────
+model Tarea {
+  id           String   @id @default(cuid())
+  materiaId    String
+  titulo       String
+  descripcion  String
+  fechaEntrega DateTime
+  createdAt    DateTime @default(now())
+  anio         String?  // "1ro" | "2do" | "3ro" | "4to" | "5to"
+  seccion      String?  // "A" | "B" | "C" | "D"
+
+  materia Materia @relation(fields: [materiaId], references: [id], onDelete: Cascade)
+
+  @@map("tareas")
+}
+
+// ─── Notificación ───────────────────────────────────────────
+model Notificacion {
+  id           String           @id @default(cuid())
+  tipo         String           @default("ASISTENCIA") // ASISTENCIA | EVALUACION | TAREA | SISTEMA
+  titulo       String
+  mensaje      String
+  fecha        DateTime         @default(now())
+  leida        Boolean          @default(false)
+
+  // Relaciones
+  usuarioId    String
+  usuario      Usuario          @relation(fields: [usuarioId], references: [id], onDelete: Cascade)
+
+  estudianteId String?
+  estudiante   Estudiante?      @relation(fields: [estudianteId], references: [id], onDelete: SetNull)
+
+  materiaId    String?
+  materia      Materia?         @relation(fields: [materiaId], references: [id], onDelete: SetNull)
+
+  // Metadatos
+  data         String? // JSON string
+  creadoPor    String?
+  enCola       Boolean          @default(true)
+  enviado      Boolean          @default(false)
+
+  createdAt    DateTime         @default(now())
+  updatedAt    DateTime         @updatedAt
+
+  @@map("notificaciones")
+}
+
+// ─── Log de Auditoría ───────────────────────────────────────
+model LogAuditoria {
+  id           String   @id @default(cuid())
+  usuarioId    String
+  usuarioEmail String   @default("")
+  accion       String   // "VALIDACION_CLAVE_EXITOSA", "VALIDACION_CLAVE_FALLIDA", "EDICION_ASISTENCIA", etc.
+  materiaId    String?
+  detalle      String?
+  fecha        DateTime @default(now())
+  ip           String?
+  userAgent    String?
+
+  usuario Usuario @relation(fields: [usuarioId], references: [id], onDelete: Cascade)
+
+  @@map("log_auditoria")
+}
+
+// ─── Clave Temporal (OTP para directivo) ───────────────────
+model ClaveTemporal {
+  id        String   @id @default(cuid())
+  clave     String
+  materiaId String
+  anio      String
+  seccion   String
+  creadoPor String   // ID del profesor que la generó
+  usado     Boolean  @default(false)
+  expiraAt  DateTime
+  createdAt DateTime @default(now())
+
+  @@map("claves_temporales")
+}
+
+// ─── Comprobante de Pago ──────────────────────────────────
+model ComprobantePago {
+  id               String   @id @default(cuid())
+  estudianteId     String
+  estudianteNombre String
+  estudianteAnio   String
+  estudianteSeccion String
+  referencia       String
+  metodo           String
+  screenshot       String?  // base64 de la imagen
+  aprobado         Boolean  @default(false)
+  createdAt        DateTime @default(now())
+
+  @@map("comprobantes_pago")
+}
+
+// ─── Configuración de la Institución ─────────────────────────
+model Configuracion {
+  id    String @id @default("institucion")
+  nombre String @default("Asistencia Plus")
+  logo  String @default("") // base64
+
+  @@map("configuracion")
+}
+
+// ─── Horario (por año y sección) ──────────────────────────
+model Horario {
+  id            String   @id @default(cuid())
+  anio          String
+  seccion       String
+  data          String   // JSON string con estructura: { headers: string[], rows: string[][] }
+  archivoNombre String
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  @@unique([anio, seccion])
+  @@map("horarios")
+}
