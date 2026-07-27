@@ -43,7 +43,8 @@ export function AjustesModal({ rol, onClose }: { rol?: string; onClose: () => vo
       { nombre: "Transferencia", datos: [
         { clave: "Banco", valor: "Banco Nacional" },
         { clave: "Titular", valor: "U.E. Asistencia Plus" },
-        { clave: "Documento", valor: "J123456789" },
+        { clave: "Tipo de Documento", valor: "J" },
+        { clave: "Nro. de Documento", valor: "123456789" },
         { clave: "Cuenta", valor: "01021234567890123456" },
         { clave: "Tipo", valor: "Corriente" },
       ]},
@@ -51,7 +52,8 @@ export function AjustesModal({ rol, onClose }: { rol?: string; onClose: () => vo
         { clave: "Banco", valor: "Banco Nacional" },
         { clave: "Teléfono", valor: "04125550000" },
         { clave: "Titular", valor: "U.E. Asistencia Plus" },
-        { clave: "Documento", valor: "J123456789" },
+        { clave: "Tipo de Documento", valor: "J" },
+        { clave: "Nro. de Documento", valor: "123456789" },
       ]},
     ];
   };

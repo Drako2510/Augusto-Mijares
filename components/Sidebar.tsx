@@ -16,6 +16,7 @@ const NAV_ITEMS: Record<string, { href?: string; icon: string; label: string; ac
   ],
   profesor: [
     { href: "/profesor", icon: "📚", label: "Mis Materias" },
+    { icon: "📅", label: "Ver Mi Horario", action: "verHorario" },
   ],
   representante: [
     { href: "/representante", icon: "🏠", label: "Inicio" },

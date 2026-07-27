@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import Link from "next/link";
 import { HorarioProfesorModal } from "@/components/profesor/HorarioProfesorModal";
 
@@ -18,6 +18,12 @@ interface Props {
 
 export function ProfesorDashboardCliente({ asignaciones }: Props) {
   const [mostrarHorario, setMostrarHorario] = useState(false);
+
+  useEffect(() => {
+    const handler = () => setMostrarHorario(true);
+    window.addEventListener("prof:verHorario", handler);
+    return () => window.removeEventListener("prof:verHorario", handler);
+  }, []);
 
   // Agrupar por materia
   const porMateria = useMemo(() => {
@@ -51,12 +57,6 @@ export function ProfesorDashboardCliente({ asignaciones }: Props) {
             evaluaciones y tareas.
           </p>
         </div>
-        <button
-          onClick={() => setMostrarHorario(true)}
-          className="inline-flex items-center gap-2 rounded-full bg-purple-600 px-4 py-2.5 text-sm font-bold text-white shadow-md hover:bg-purple-700 hover:shadow-lg transition-all"
-        >
-          📅 Ver Mi Horario
-        </button>
       </div>
 
       {asignaciones.length === 0 ? (

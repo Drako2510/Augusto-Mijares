@@ -27,7 +27,10 @@ export function DashboardLayoutClient({
         rol={rol}
         abierto={sidebarAbierto}
         onClose={() => setSidebarAbierto(false)}
-        onVerHorario={() => window.dispatchEvent(new CustomEvent("rep:verHorario"))}
+        onVerHorario={() => {
+          window.dispatchEvent(new CustomEvent("rep:verHorario"));
+          window.dispatchEvent(new CustomEvent("prof:verHorario"));
+        }}
         onPagoMensualidad={() => window.dispatchEvent(new CustomEvent("rep:pagoMensualidad"))}
         onVerNotas={() => window.dispatchEvent(new CustomEvent("rep:verNotas"))}
         onHistorialAsistencia={() => window.dispatchEvent(new CustomEvent("rep:historialAsistencia"))}
