@@ -169,7 +169,7 @@ export function CalificacionesModal({ materiaId, materiaNombre, anio, seccion, o
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4" onClick={onClose}>
-      <div className="w-full max-w-2xl max-h-[85vh] overflow-y-auto rounded-2xl bg-white dark:bg-gray-900 shadow-2xl animate-slideUp" onClick={(e) => e.stopPropagation()}>
+      <div className="w-full max-w-2xl max-h-[85vh] overflow-y-auto rounded-2xl bg-white dark:bg-gray-900 shadow-2xl animate-scaleIn" onClick={(e) => e.stopPropagation()}>
         <div className="flex items-center justify-between gap-3 border-b border-gray-100 dark:border-gray-800 p-5">
           <div>
             <h3 className="text-lg font-bold text-gray-800 dark:text-gray-100">
@@ -251,7 +251,7 @@ export function CalificacionesModal({ materiaId, materiaNombre, anio, seccion, o
       {/* Modal de autorización del directivo */}
       {mostrarAuth && (
         <div className="fixed inset-0 z-[60] flex items-center justify-center bg-black/50 backdrop-blur-sm p-4" onClick={() => { setMostrarAuth(false); setPasswordAuth(""); }}>
-          <div className="w-full max-w-sm rounded-2xl bg-white dark:bg-gray-900 shadow-2xl animate-slideUp" onClick={(e) => e.stopPropagation()}>
+          <div className="w-full max-w-sm rounded-2xl bg-white dark:bg-gray-900 shadow-2xl animate-scaleIn" onClick={(e) => e.stopPropagation()}>
             <div className="p-6">
               <div className="flex items-start gap-3">
                 <div className="flex h-10 w-10 items-center justify-center rounded-full bg-amber-100 dark:bg-amber-900/40 text-xl">🔐</div>
@@ -278,7 +278,7 @@ export function CalificacionesModal({ materiaId, materiaNombre, anio, seccion, o
       {/* Modal de editar evaluación */}
       {editandoEval && (
         <div className="fixed inset-0 z-[60] flex items-center justify-center bg-black/50 backdrop-blur-sm p-4" onClick={() => setEditandoEval(null)}>
-          <div className="w-full max-w-md rounded-2xl bg-white dark:bg-gray-900 shadow-2xl animate-slideUp" onClick={(e) => e.stopPropagation()}>
+          <div className="w-full max-w-md rounded-2xl bg-white dark:bg-gray-900 shadow-2xl animate-scaleIn" onClick={(e) => e.stopPropagation()}>
             <div className="flex items-center justify-between gap-3 border-b border-gray-100 dark:border-gray-800 p-5">
               <h3 className="text-lg font-bold text-gray-800 dark:text-gray-100">✏️ Editar Evaluación</h3>
               <button onClick={() => setEditandoEval(null)} className="rounded-full p-1 text-gray-400 hover:text-gray-600">✕</button>

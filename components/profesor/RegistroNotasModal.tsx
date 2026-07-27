@@ -77,7 +77,7 @@ export function RegistroNotasModal({ evaluacionTitulo, materiaId, anio, seccion,
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4" onClick={onClose}>
-      <div className="w-full max-w-lg max-h-[85vh] overflow-y-auto rounded-2xl bg-white dark:bg-gray-900 shadow-2xl animate-slideUp" onClick={(e) => e.stopPropagation()}>
+      <div className="w-full max-w-lg max-h-[85vh] overflow-y-auto rounded-2xl bg-white dark:bg-gray-900 shadow-2xl animate-scaleIn" onClick={(e) => e.stopPropagation()}>
         <div className="flex items-center justify-between gap-3 border-b border-gray-100 dark:border-gray-800 p-5">
           <div>
             <h3 className="text-lg font-bold text-gray-800 dark:text-gray-100">📝 Registrar Notas</h3>

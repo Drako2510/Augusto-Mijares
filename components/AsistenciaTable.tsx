@@ -60,7 +60,7 @@ export default function AsistenciaTable({
       {/* Modal justificado */}
       {justificarEst && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4">
-          <div className="w-full max-w-sm rounded-2xl bg-white dark:bg-gray-900 shadow-2xl animate-slideUp">
+          <div className="w-full max-w-sm rounded-2xl bg-white dark:bg-gray-900 shadow-2xl animate-scaleIn">
             <div className="p-6">
               <h3 className="text-lg font-bold text-gray-800 dark:text-gray-100 mb-2">
                 📝 Justificar Ausencia

@@ -132,7 +132,7 @@ export function AjustesModal({ rol, onClose }: { rol?: string; onClose: () => vo
 
   return (
     <div className="fixed inset-0 z-[70] flex items-center justify-center bg-black/40 backdrop-blur-sm p-4" onClick={onClose}>
-      <div className="w-full max-w-lg rounded-2xl bg-white/80 dark:bg-gray-900/80 backdrop-blur-xl border border-white/20 dark:border-gray-700/30 shadow-2xl animate-slideUp" onClick={(e) => e.stopPropagation()}>
+      <div className="w-full max-w-lg rounded-2xl bg-white/80 dark:bg-gray-900/80 backdrop-blur-xl border border-white/20 dark:border-gray-700/30 shadow-2xl animate-scaleIn" onClick={(e) => e.stopPropagation()}>
         {/* Header */}
         <div className="flex items-center justify-between gap-3 border-b border-gray-100 dark:border-gray-800 p-5">
           <div className="flex items-center gap-3">

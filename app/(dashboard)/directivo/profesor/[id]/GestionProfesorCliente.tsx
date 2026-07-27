@@ -92,7 +92,7 @@ export function GestionProfesorCliente({ profesor, asignaciones }: Props) {
       {/* Modal de confirmación */}
       {mostrarConfirmacion && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4">
-          <div className="w-full max-w-md overflow-hidden rounded-2xl bg-white dark:bg-gray-900 shadow-2xl animate-slideUp">
+          <div className="w-full max-w-md overflow-hidden rounded-2xl bg-white dark:bg-gray-900 shadow-2xl animate-scaleIn">
             <div className="p-6">
               <div className="flex items-start gap-3">
                 <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-red-100 dark:bg-red-900/40">

@@ -224,7 +224,7 @@ export default function DashboardClient({
           {/* Modal de Asistencia */}
           {mostrarAsistencia && (
             <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4" onClick={() => setMostrarAsistencia(false)}>
-              <div className="w-full max-w-4xl max-h-[85vh] overflow-y-auto rounded-2xl bg-white dark:bg-gray-900 shadow-2xl animate-slideUp" onClick={(e) => e.stopPropagation()}>
+              <div className="w-full max-w-4xl max-h-[85vh] overflow-y-auto rounded-2xl bg-white dark:bg-gray-900 shadow-2xl animate-scaleIn" onClick={(e) => e.stopPropagation()}>
                 <div className="flex items-center justify-between gap-3 border-b border-gray-100 dark:border-gray-800 p-6">
                   <div className="flex items-center gap-3">
                     <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-green-100 dark:bg-green-900/40 text-xl">✅</div>
@@ -296,7 +296,7 @@ export default function DashboardClient({
       {mostrarNotificaciones && (
         <div className="fixed inset-0 z-50 flex items-start justify-end p-4 pt-20" onClick={() => setMostrarNotificaciones(false)}>
           <div
-            className="w-full max-w-sm max-h-[70vh] overflow-y-auto rounded-2xl bg-white dark:bg-gray-900 shadow-2xl border border-gray-200 dark:border-gray-700 animate-slideUp"
+            className="w-full max-w-sm max-h-[70vh] overflow-y-auto rounded-2xl bg-white dark:bg-gray-900 shadow-2xl border border-gray-200 dark:border-gray-700 animate-scaleIn"
             onClick={(e) => e.stopPropagation()}
           >
             <div className="flex items-center justify-between px-5 py-3 border-b border-gray-100 dark:border-gray-800">

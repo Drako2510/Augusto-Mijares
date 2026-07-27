@@ -197,7 +197,7 @@ export function HorarioRepresentanteModal({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4">
-      <div className="w-full max-w-5xl max-h-[90vh] overflow-y-auto rounded-2xl bg-white dark:bg-gray-900 shadow-2xl animate-slideUp">
+      <div className="w-full max-w-5xl max-h-[90vh] overflow-y-auto rounded-2xl bg-white dark:bg-gray-900 shadow-2xl animate-scaleIn">
         {/* Header */}
         <div className="flex items-center justify-between gap-3 border-b border-gray-100 dark:border-gray-800 p-6">
           <div className="flex items-center gap-3">

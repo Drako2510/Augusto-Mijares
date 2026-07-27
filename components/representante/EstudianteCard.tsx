@@ -229,7 +229,7 @@ function NotasModal({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4" onClick={onClose}>
-      <div className="w-full max-w-lg max-h-[80vh] overflow-y-auto rounded-2xl bg-white dark:bg-gray-900 shadow-2xl animate-slideUp" onClick={(e) => e.stopPropagation()}>
+      <div className="w-full max-w-lg max-h-[80vh] overflow-y-auto rounded-2xl bg-white dark:bg-gray-900 shadow-2xl animate-scaleIn" onClick={(e) => e.stopPropagation()}>
         <div className="flex items-center justify-between gap-3 border-b border-gray-100 dark:border-gray-800 p-6">
           <div className="flex items-center gap-3">
             <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-blue-100 dark:bg-blue-900/40 text-xl">📝</div>
@@ -321,7 +321,7 @@ function NotasModal({
         {/* Popup de detalle de nota */}
         {notaDetalle && (
           <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/20" onClick={() => setNotaDetalle(null)}>
-            <div className="w-64 rounded-xl bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 shadow-lg p-4 text-center animate-slideUp" onClick={(e) => e.stopPropagation()}>
+            <div className="w-64 rounded-xl bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 shadow-lg p-4 text-center animate-scaleIn" onClick={(e) => e.stopPropagation()}>
               <p className="text-xs text-gray-400">{notaDetalle.materia}</p>
               <p className="text-sm font-bold text-gray-800 dark:text-gray-100 mt-0.5">{notaDetalle.evaluacion}</p>
               <p className="text-2xl font-extrabold text-blue-600 dark:text-blue-400 mt-1">{notaDetalle.valor}/20</p>

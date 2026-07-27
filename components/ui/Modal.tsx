@@ -35,7 +35,7 @@ export function Modal({ open, onClose, title, children }: ModalProps) {
         if (e.target === overlayRef.current) onClose();
       }}
     >
-      <div className="glass-card mx-4 w-full max-w-lg rounded-2xl p-6 shadow-2xl animate-slideUp max-h-[90vh] overflow-y-auto">
+      <div className="glass-card mx-4 w-full max-w-lg rounded-2xl p-6 shadow-2xl animate-scaleIn max-h-[90vh] overflow-y-auto">
         {title && (
           <div className="mb-4 flex items-center justify-between">
             <h2 className="text-lg font-extrabold text-gray-800 dark:text-gray-100">{title}</h2>

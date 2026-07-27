@@ -150,7 +150,7 @@ export function RepresentanteDashboardCliente({ hijos }: Props) {
       {/* Modal notificaciones */}
       {mostrarNotificaciones && (
         <div className="fixed inset-0 z-50 flex items-start justify-end p-4 pt-16" onClick={() => setMostrarNotificaciones(false)}>
-          <div className="w-full max-w-sm max-h-[70vh] overflow-y-auto rounded-2xl bg-white dark:bg-gray-900 shadow-2xl border border-gray-200 dark:border-gray-700 animate-slideUp" onClick={(e) => e.stopPropagation()}>
+          <div className="w-full max-w-sm max-h-[70vh] overflow-y-auto rounded-2xl bg-white dark:bg-gray-900 shadow-2xl border border-gray-200 dark:border-gray-700 animate-scaleIn" onClick={(e) => e.stopPropagation()}>
             <div className="flex items-center justify-between px-5 py-3 border-b border-gray-100 dark:border-gray-800">
               <h3 className="font-bold text-gray-800 dark:text-gray-100">🔔 Notificaciones</h3>
               <div className="flex items-center gap-2">
